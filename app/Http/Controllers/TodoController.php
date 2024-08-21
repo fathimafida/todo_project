@@ -34,5 +34,12 @@ class TodoController extends Controller
         return redirect()->route('todoList')->with('success', 'Todo created successfully.');
     //   dd($request->all());
     }
+
+    public function show(Request $request, Todo $todo)
+    {
+        // dd($id);
+        // $todo = Todo::find($id);  inorder to simplify instead of passing id we can directly pass Todo $todo so in route also  we need to change it as todo instead of id
+        return view('todos.show',compact('todo'));
+    }
 }
 
