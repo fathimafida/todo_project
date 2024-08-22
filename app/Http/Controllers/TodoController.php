@@ -41,5 +41,29 @@ class TodoController extends Controller
         // $todo = Todo::find($id);  inorder to simplify instead of passing id we can directly pass Todo $todo so in route also  we need to change it as todo instead of id
         return view('todos.show',compact('todo'));
     }
+
+    public function edit(Todo $todo)
+    {
+        return view('todos.edit',compact('todo'));
+    }
+
+    public function update(Request $request, Todo $todo)
+    {
+        $request->validate([
+            'title' => 'required|min:3',
+            'description' => 'required',
+        ]);
+        $todo->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+        return redirect()->route('todoList')->with('success', 'Todo updated successfully.');
+    }
+
+    public function destroy(Todo $todo)
+    {
+        $todo->delete();
+        return redirect()->route('todoList')->with('success', 'Todo deleted successfully.');
+    }
 }
 
